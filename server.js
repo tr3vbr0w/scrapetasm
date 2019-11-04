@@ -64,6 +64,37 @@ app.get("/scrape", function (req, res) {
         res.send("Scrape Complete")
     });
 });
+// Route for getting all Articles from the db
+// app.get("/articles", function(req, res) {
+//     // TODO: Finish the route so it grabs all of the articles
+//     db.Article.find({}, function(err, data){
+//       if (err){
+//         res.sendStatus(500);
+//       }
+//       res.json(data);
+//     })
+//   });
+  
+//   // Route for grabbing a specific Article by id, populate it with it's note
+//   app.get("/articles/:id", function(req, res) {
+//     // TODO
+//     // ====
+//     // Finish the route so it finds one article using the req.params.id,
+//     db.Article.findOne({_id : req.params.id})
+//     .populate("note")
+//     .then(function(dbNote){
+      
+//       res.json(dbNote)
+//     })
+//     .catch(function(err){
+//       if (err) {
+//         res.sendStatus(500);
+//       }
+//     })
+//     // and run the populate method with "note",
+//     // then responds with the article with the note included
+   
+//   });
 app.listen(PORT, function() {
     console.log("App running on port " + PORT + "!");
   });
