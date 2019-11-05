@@ -65,15 +65,14 @@ app.get("/scrape", function (req, res) {
     });
 });
 // Route for getting all Articles from the db
-// app.get("/articles", function(req, res) {
-//     // TODO: Finish the route so it grabs all of the articles
-//     db.Article.find({}, function(err, data){
-//       if (err){
-//         res.sendStatus(500);
-//       }
-//       res.json(data);
-//     })
-//   });
+app.get("/resorts", function(req, res){
+    db.Resort.find({}, function(err, data){
+        if (err) {
+            res.sendStatus(500);
+        }
+        res.json(data)
+    })
+})
   
 //   // Route for grabbing a specific Article by id, populate it with it's note
 //   app.get("/articles/:id", function(req, res) {
