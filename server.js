@@ -1,4 +1,5 @@
 // Require node packages
+var exphbs = require('express-handlebars')
 var express = require("express");
 var logger = require("morgan");
 var mongoose = require("mongoose");
@@ -28,10 +29,16 @@ app.use(express.static("public"));
 //Connect to mongo database
 mongoose.connect("mongodb://localhost/unit18Populater", { useNewUrlParser: true });
 
+// Set up handlebars
+// Register Handlebars view engine
+app.engine('handlebars', exphbs());
+// Use Handlebars view engine
+app.set('view engine', 'handlebars');
+
 //Routes
 
 //The GET route scrapes opensnow for data we use to populate the our webpage
-
+//API Routes
 app.get("/scrape", function (req, res) {
     //Use axios to grab the body of html
     axios.get("https://opensnow.com/state/UT#history").then(function (response) {
@@ -65,36 +72,34 @@ app.get("/scrape", function (req, res) {
     });
 });
 // Route for getting all Articles from the db
-app.get("/resorts", function(req, res){
-    db.Resort.find({}, function(err, data){
+app.get("/api/resorts", function (req, res) {
+    db.Resort.find({}, function (err, data) {
         if (err) {
             res.sendStatus(500);
         }
         res.json(data)
     })
 })
-  
-//   // Route for grabbing a specific Article by id, populate it with it's note
-//   app.get("/articles/:id", function(req, res) {
-//     // TODO
-//     // ====
-//     // Finish the route so it finds one article using the req.params.id,
-//     db.Article.findOne({_id : req.params.id})
-//     .populate("note")
-//     .then(function(dbNote){
-      
-//       res.json(dbNote)
-//     })
-//     .catch(function(err){
-//       if (err) {
-//         res.sendStatus(500);
-//       }
-//     })
-//     // and run the populate method with "note",
-//     // then responds with the article with the note included
-   
-//   });
-app.listen(PORT, function() {
+app.get("/api/resorts", function (req, res) {
+    db.Resort.find({}, function (err, data) {
+        if (err) {
+            res.sendStatus(500);
+        }
+        res.json(data)
+    })
+})
+
+
+//HTML Routes
+app.get('/', function (req, res) {
+    db.Resort.find({}, function (err, data) {
+        // res.send(data)
+        res.render("index")
+    })
+  })
+
+
+app.listen(PORT, function () {
     console.log("App running on port " + PORT + "!");
-  });
+});
 
