@@ -19,15 +19,20 @@ var PORT = 3000;
 //Morgan request logger
 app.use(logger("dev"));
 
-//Middleware to parse request body as a json object
+//Middleware to parse request body as a json object, set public as a static folder
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(express.static(__dirname+ "/public"));
 
-// Make public a static folder
-app.use(express.static("public"));
+
 
 //Connect to mongo database
 mongoose.connect("mongodb://localhost/unit18Populater", { useNewUrlParser: true });
+
+// set mongoose middleware
+mongoose.set('useFindAndModify', false);
+mongoose.set('useCreateIndex', true);
+mongoose.set('useUnifiedTopology', true);
 
 // Set up handlebars
 // Register Handlebars view engine
@@ -36,6 +41,11 @@ app.engine('handlebars', exphbs());
 app.set('view engine', 'handlebars');
 
 //Routes
+
+//Route to go out and get css files
+app.get("assets/css/style.css", (req, res) => {
+    res.sendFile(__dirname, "assets/css/style.css");
+  });
 
 //The GET route scrapes opensnow for data we use to populate the our webpage
 //API Routes
@@ -79,13 +89,23 @@ app.get("/api/resorts", function (req, res) {
 })
 
 
+//Route to clear everything from the database
+app.post("/clear", function(req, res) {
+    db.Resort.deleteMany({})
+      .then(function(removed) { 
+          res.json(removed)
+        })
+      .catch(function(err) { 
+        res.json(err)
+      });
+  });
 
-//HTML Routes
+  //HTML Routes
 app.get('/', function (req, res) {
+    //Reach out to the mongo server, find all resorts
     db.Resort.find(function (err,resorts) {
         if (err) throw err;
-        console.log(resorts);
-        
+       //Set information about resorts from mongo to handlebars variable
         res.render("index", {
             resorts : resorts
         });

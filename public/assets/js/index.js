@@ -8,3 +8,9 @@ var API = {
         });
     }
 };
+$("#clear").click(function(event) {
+    $.post("/clear", function (resorts) {
+      console.log(resorts);
+      location.reload();
+    });
+  });
