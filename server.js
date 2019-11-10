@@ -44,10 +44,7 @@ app.get("/scrape", function (req, res) {
     axios.get("https://opensnow.com/state/UT#history").then(function (response) {
         //Save cheerio to $ to run like jQuery
         var $ = cheerio.load(response.data);
-        //Seop open Object use this so store objects and eventually push object to database
-
-
-        //Grab every CHILD HTML TAG within a PARENT HTML TAG, follows cheerio syntax from documentation here
+       //Grab every CHILD HTML TAG within a PARENT HTML TAG, follows cheerio syntax from documentation here
         $(".title-location").each(function (i, element) {
 
             //Save the results to a local object
@@ -56,7 +53,7 @@ app.get("/scrape", function (req, res) {
             result.resortTitle = $(this)
                 .children()
                 .text();
-            result.link = "https://opensnow.com/state/UT#history" + $(this)
+            result.link = "https://opensnow.com/" + $(this)
                 .find("a")
                 .attr("href");
             //
@@ -80,23 +77,18 @@ app.get("/api/resorts", function (req, res) {
         res.json(data)
     })
 })
-app.get("/api/resorts", function (req, res) {
-    db.Resort.find({}, function (err, data) {
-        if (err) {
-            res.sendStatus(500);
-        }
-        res.json(data)
-    })
-})
+
 
 
 //HTML Routes
 app.get('/', function (req, res) {
-    db.Resort.find({}, function (err, data) {
+    db.Resort.find({}, function (dbResort) {
         // res.send(data)
-        res.render("index")
-    })
-  })
+        res.render("index", {
+            resort : dbResort
+        });
+    });
+});
 
 
 app.listen(PORT, function () {

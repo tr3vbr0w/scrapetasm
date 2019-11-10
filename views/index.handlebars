@@ -1,14 +1,44 @@
-
+{{!-- Nav --}}
 <nav>
-    <div class="nav-wrapper">
-        <a href="#" class="brand-logo right">Logo</a>
-        <ul id="nav-mobile" class="left hide-on-med-and-down">
-            <li><a href="sass.html">Sass</a></li>
-            <li><a href="badges.html">Components</a></li>
-            <li><a href="collapsible.html">JavaScript</a></li>
-        </ul>
-    </div> 
+  <div class="nav-wrapper">
+    <a href="#" class="brand-logo right">Logo</a>
+    <ul id="nav-mobile" class="left hide-on-med-and-down">
+      <li><a href="sass.html">Sass</a></li>
+      <li><a href="badges.html">Components</a></li>
+      <li><a href="collapsible.html">JavaScript</a></li>
+    </ul>
+  </div>
 </nav>
+{{!-- Background Image --}}
+<div class="mountain-image">
+  <div class="container">
+    <div class="row valign-wrapper">
+      <div class="col s12 center-align">
+        <h3 class="callout">Snow Now</h3>
+      </div>
+    </div>
+    {{! Row container for power tools cards, linking to individual routes within each page}}
 
 
+  </div>
+</div>
 
+{{#each resorts}}
+<div class="container">
+  <div class="card col s3" id={{this.id}}>
+    <div class="card-image waves-effect waves-block waves-light">
+      <img class="activator" src="">
+    </div>
+    <div class="card-content">
+      <span class="card-title activator grey-text text-darken-4">{{this.resortTitle}}<i
+          class="material-icons right">more_vert</i></span>
+      <p><a href="{{this.link}}">This is a link</a></p>
+    </div>
+    <div class="card-reveal">
+      <span class="card-title grey-text text-darken-4">{{this.resortTitle}}<i class="material-icons right">close</i></span>
+      <span class="card-title grey-text text-darken-4">{{this.resortTitle}}<i class="material-icons right">close</i></span>
+      <p>Here is some more information about this product that is only revealed once clicked on.</p>
+    </div>
+  </div>
+</div>
+{{/each}}
