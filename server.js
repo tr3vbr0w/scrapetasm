@@ -62,7 +62,7 @@ app.get("/scrape", function (req, res) {
                     console.log(dbResort);
                 })
                 .catch(function (err) {
-                    res.sendStatus(500);
+                    res.sendStatus(err);
                 });
         });
         res.send("Scrape Complete")
@@ -82,10 +82,12 @@ app.get("/api/resorts", function (req, res) {
 
 //HTML Routes
 app.get('/', function (req, res) {
-    db.Resort.find({}, function (dbResort) {
-        // res.send(data)
+    db.Resort.find(function (err,resorts) {
+        if (err) throw err;
+        console.log(resorts);
+        
         res.render("index", {
-            resort : dbResort
+            resorts : resorts
         });
     });
 });
