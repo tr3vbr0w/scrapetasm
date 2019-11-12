@@ -1,5 +1,4 @@
-
-
+{{!-- Row container for earch resorts card --}}
 <div class="container">
   <div class="row">
     {{#each resorts}}
@@ -11,8 +10,7 @@
         <span class="card-title activator grey-text text-darken-4">{{this.resortTitle}}<i
             class="material-icons right">more_vert</i></span>
         <p><a href="{{this.link}}">This is a link</a></p>
-        <a class="btn favorite" id = "{{this._id}}">Favorite</a>
-        <a class="btn delete" id = "{{this._id}}">Delete</a>
+        <a href = "" class="btn delete" id = "{{this._id}}">Delete</a>
         <button class="comment">Comment</button>
       </div>
       <div class="card-reveal">

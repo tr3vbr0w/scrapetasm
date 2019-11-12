@@ -13,6 +13,10 @@ var ResortSchema = new Schema({
         type: String,
         required: true
     },
+    favorite: {
+        type: Boolean,
+        default: false
+    },
     comment:{
         type: Schema.Types.ObjectId,
         ref: "comment"

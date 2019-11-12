@@ -43,7 +43,7 @@ app.set('view engine', 'handlebars');
 //Routes
 
 //Route to go out and get css files
-app.get("assets/css/style.css", (req, res) => {
+app.get("/assets/css/style.css", (req, res) => {
     res.sendFile(__dirname, "assets/css/style.css");
   });
 
@@ -97,6 +97,18 @@ app.post("/clear", function(req, res) {
       });
   });
 
+app.post("api/favorites/:id", (req, res) => {
+    db.Resort.update(
+        {_id: req.params.id},
+        {
+            $set:{favorite: true}
+        }
+     ).then(dbResort =>{
+        res.json(dbResort)
+    }).catch(err => {
+        res.sendStatus(500)
+    })
+})
 // Route to delete an item from the page by its ID
 app.delete("/api/resorts/:id", function(req,res){
     db.Resort.deleteOne({
@@ -109,7 +121,6 @@ app.delete("/api/resorts/:id", function(req,res){
 })
 
 //HTML Routes
-
 app.get('/', function (req, res) {
     //Reach out to the mongo server, find all resorts
     db.Resort.find(function (err,resorts) {
@@ -120,6 +131,20 @@ app.get('/', function (req, res) {
         });
     });
 });
+app.get('/favorites', function (req, res) {
+    //Reach out to the mongo server, find all resorts
+    db.Resort.find(
+        {favorite : true},function (err,resorts) {
+        if (err) throw err;
+
+       //Set information about resorts from mongo to handlebars variable
+        res.render("favorites", {
+            resorts : resorts
+        });
+    })
+    
+});
+
 
 
 app.listen(PORT, function () {

@@ -6,3 +6,6 @@
     background-size: cover;
     position: relative;
   }
+body {
+  background-color: aqua;
+}
