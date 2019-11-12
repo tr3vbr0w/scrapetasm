@@ -68,9 +68,6 @@ app.get("/scrape", function (req, res) {
                 .attr("href");
             //
             db.Resort.create(result)
-                .then(function (dbResort) {
-                    console.log(dbResort);
-                })
                 .catch(function (err) {
                     res.sendStatus(err);
                 });
@@ -100,7 +97,19 @@ app.post("/clear", function(req, res) {
       });
   });
 
-  //HTML Routes
+// Route to delete an item from the page by its ID
+app.delete("/api/resorts/:id", function(req,res){
+    db.Resort.deleteOne({
+        _id : req.params.id
+    })
+    .then(function(dbResort){
+        res.json(dbResort)
+
+    });
+})
+
+//HTML Routes
+
 app.get('/', function (req, res) {
     //Reach out to the mongo server, find all resorts
     db.Resort.find(function (err,resorts) {

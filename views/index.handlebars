@@ -26,7 +26,7 @@
 <div class="container">
   <div class="row">
     {{#each resorts}}
-    <div class="card col s3" id={{this.id}}>
+    <div class="card col s3">
       <div class="card-image waves-effect waves-block waves-light">
         <img class="activator" src="">
       </div>
@@ -34,9 +34,8 @@
         <span class="card-title activator grey-text text-darken-4">{{this.resortTitle}}<i
             class="material-icons right">more_vert</i></span>
         <p><a href="{{this.link}}">This is a link</a></p>
-        <button class="delete">Delete</button>
+        <a href = "" class="btn delete" id = "{{this._id}}">Delete</a>
         <button class="comment">Comment</button>
-        <button class="delete">Add to Favorites</button>
       </div>
       <div class="card-reveal">
         <span class="card-title grey-text text-darken-4">{{this.resortTitle}}<i
