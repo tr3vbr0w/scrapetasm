@@ -6,12 +6,11 @@ $("#clear").click(function(event) {
   });
 $("#favorite").click(function(event) {
     $.ajax({
-      url:"/api/favorites/" + this.id,
+      url:"/api/favorites/",
       method: "GET"
     }).then(
-       function (resorts) {
+      function (resorts) {
       console.log(resorts);
-      location.reload();
     });
   });
   // Delete button click
@@ -30,12 +29,11 @@ $(".delete").click(function(event) {
 })
 
 $(".favorite").click(function(event){
-  console.log("hello");
   $.ajax({
     url: "/api/resorts/" + this.id,
     method: "POST"
   }).then(function(data){
-    console.log(data);
+    console.log(data.favorite);
     
   }).catch(function(err){
     console.log(err);

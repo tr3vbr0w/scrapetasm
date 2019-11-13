@@ -8,16 +8,23 @@
       </div>
       <div class="card-content">
         <span class="card-title activator grey-text text-darken-4">{{this.resortTitle}}<i
-            class="material-icons right">more_vert</i></span>
+            class="material-icons right">Comment</i></span>
         <p><a href="{{this.link}}">This is a link</a></p>
-        <a href = "" class="btn delete" id = "{{this._id}}">Delete</a>
-        <button class="comment">Comment</button>
+        <a href="" class="btn delete" id="{{this._id}}">Delete</a>
       </div>
       <div class="card-reveal">
         <span class="card-title grey-text text-darken-4">{{this.resortTitle}}<i
             class="material-icons right">close</i></span>
-
-        <p>Here is some more information about this product that is only revealed once clicked on.</p>
+        <div class="row">
+          <form class="col s12">
+            <div class="row">
+              <div class="input-field col s12">
+                <textarea id="textarea1" class="materialize-textarea"></textarea>
+                <label for="textarea1">Textarea</label>
+              </div>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
     {{/each}}

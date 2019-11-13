@@ -22,7 +22,7 @@ app.use(logger("dev"));
 //Middleware to parse request body as a json object, set public as a static folder
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(express.static(__dirname+ "/public"));
+app.use(express.static(__dirname + "/public"));
 
 
 
@@ -45,7 +45,7 @@ app.set('view engine', 'handlebars');
 //Route to go out and get css files
 app.get("/assets/css/style.css", (req, res) => {
     res.sendFile(__dirname, "assets/css/style.css");
-  });
+});
 
 //The GET route scrapes opensnow for data we use to populate the our webpage
 //API Routes
@@ -54,7 +54,7 @@ app.get("/scrape", function (req, res) {
     axios.get("https://opensnow.com/state/UT#history").then(function (response) {
         //Save cheerio to $ to run like jQuery
         var $ = cheerio.load(response.data);
-       //Grab every CHILD HTML TAG within a PARENT HTML TAG, follows cheerio syntax from documentation here
+        //Grab every CHILD HTML TAG within a PARENT HTML TAG, follows cheerio syntax from documentation here
         $(".title-location").each(function (i, element) {
 
             //Save the results to a local object
@@ -87,62 +87,62 @@ app.get("/api/resorts", function (req, res) {
 
 
 //Route to clear everything from the database
-app.post("/clear", function(req, res) {
+app.post("/clear", function (req, res) {
     db.Resort.deleteMany({})
-      .then(function(removed) { 
-          res.json(removed)
+        .then(function (removed) {
+            res.json(removed)
         })
-      .catch(function(err) { 
-        res.json(err)
-      });
-  });
+        .catch(function (err) {
+            res.json(err)
+        });
+});
 
-app.post("/api/resorts/:id", function (req, res) {
-    // console.log("hello")
+//Find database entry by ID and update favorite status to true
+app.post("/api/resorts/:id", (req, res) => {
     db.Resort.findOneAndUpdate(
-        {_id: req.params.id},
-        {favorite: true}
-        // console.log(req.body),
-     ).then(dbResort => {
+        { _id: req.params.id },
+        { favorite: true }
+    ).then(dbResort => {
         res.json(dbResort)
     }).catch(err => {
         res.sendStatus(500)
     })
 })
 // Route to delete an item from the page by its ID
-app.delete("/api/resorts/:id", function (req,res){
+app.delete("/api/resorts/:id", function (req, res) {
     db.Resort.deleteOne({
-        _id : req.params.id
+        _id: req.params.id
     })
-    .then(function(dbResort){
-        res.json(dbResort)
+        .then(function (dbResort) {
+            res.json(dbResort)
 
-    });
+        });
 })
 
 //HTML Routes
 app.get('/', function (req, res) {
     //Reach out to the mongo server, find all resorts
-    db.Resort.find(function (err,resorts) {
+    db.Resort.find(function (err, resorts) {
         if (err) throw err;
-       //Set information about resorts from mongo to handlebars variable
+        //Set information about resorts from mongo to handlebars variable
         res.render("index", {
-            resorts : resorts
+            resorts: resorts
         });
     });
 });
 app.get('/favorites', function (req, res) {
     //Reach out to the mongo server, find all resorts
     db.Resort.find(
-        {favorite : true},function (err,resorts) {
-        if (err) throw err;
+        { favorite: true },
+        function (err, resorts) {
+            if (err) throw err;
+            console.log(resorts);
+            //Set information about resorts from mongo to handlebars variable
+            res.render("favorites", {
+                resorts: resorts
+            });
+        })
 
-       //Set information about resorts from mongo to handlebars variable
-        res.render("favorites", {
-            resorts : resorts
-        });
-    })
-    
 });
 
 
