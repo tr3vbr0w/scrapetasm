@@ -8,7 +8,7 @@ $("#favorite").click(function(event) {
     $.ajax({
       url:"/api/favorites/" + this.id,
       method: "GET"
-    }).then
+    }).then(
        function (resorts) {
       console.log(resorts);
       location.reload();
@@ -30,9 +30,10 @@ $(".delete").click(function(event) {
 })
 
 $(".favorite").click(function(event){
+  console.log("hello");
   $.ajax({
-    url: "/api/favorites" + this.id,
-    method: "UPDATE"
+    url: "/api/resorts/" + this.id,
+    method: "POST"
   }).then(function(data){
     console.log(data);
     

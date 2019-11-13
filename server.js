@@ -97,20 +97,20 @@ app.post("/clear", function(req, res) {
       });
   });
 
-app.post("api/favorites/:id", (req, res) => {
-    db.Resort.update(
+app.post("/api/resorts/:id", function (req, res) {
+    // console.log("hello")
+    db.Resort.findOneAndUpdate(
         {_id: req.params.id},
-        {
-            $set:{favorite: true}
-        }
-     ).then(dbResort =>{
+        {favorite: true}
+        // console.log(req.body),
+     ).then(dbResort => {
         res.json(dbResort)
     }).catch(err => {
         res.sendStatus(500)
     })
 })
 // Route to delete an item from the page by its ID
-app.delete("/api/resorts/:id", function(req,res){
+app.delete("/api/resorts/:id", function (req,res){
     db.Resort.deleteOne({
         _id : req.params.id
     })
