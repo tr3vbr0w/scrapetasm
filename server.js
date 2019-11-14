@@ -27,7 +27,8 @@ app.use(express.static("public"));
 
 
 //Connect to mongo database
-mongoose.connect("mongodb://localhost/unit18Populater", { useNewUrlParser: true });
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/scraper"
+mongoose.connect(MONGODB_URI);
 
 // set mongoose middleware
 mongoose.set('useFindAndModify', false);
