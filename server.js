@@ -12,7 +12,7 @@ var db = require("./models");
 // Init Express App
 var app = express();
 
-var PORT = 3000;
+var PORT = process.env.PORT || 3000;
 
 //Middleware
 
@@ -27,7 +27,7 @@ app.use(express.static("public"));
 
 
 //Connect to mongo database
-var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/scraper"
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/unit18populator";
 mongoose.connect(MONGODB_URI);
 
 // set mongoose middleware
