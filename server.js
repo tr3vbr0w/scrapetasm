@@ -22,7 +22,7 @@ app.use(logger("dev"));
 //Middleware to parse request body as a json object, set public as a static folder
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(express.static(__dirname + "/public"));
+app.use(express.static("public"));
 
 
 
@@ -43,9 +43,9 @@ app.set('view engine', 'handlebars');
 //Routes
 
 //Route to go out and get css files
-app.get("/assets/css/style.css", (req, res) => {
-    res.sendFile(__dirname, "assets/css/style.css");
-});
+// app.get("/assets/css/style.css", (req, res) => {
+//     res.sendFile(__dirname, "assets/css/style.css");
+// });
 
 //The GET route scrapes opensnow for data we use to populate the our webpage
 //API Routes
