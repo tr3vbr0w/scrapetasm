@@ -41,12 +41,6 @@ app.engine('handlebars', exphbs());
 // Use Handlebars view engine
 app.set('view engine', 'handlebars');
 
-//Routes
-
-//Route to go out and get css files
-// app.get("/assets/css/style.css", (req, res) => {
-//     res.sendFile(__dirname, "assets/css/style.css");
-// });
 
 //The GET route scrapes opensnow for data we use to populate the our webpage
 //API Routes
@@ -68,10 +62,12 @@ app.get("/scrape", function (req, res) {
                 .find("a")
                 .attr("href");
             //
-            db.Resort.create(result)
-                .catch(function (err) {
-                    res.sendStatus(err);
-                });
+            if (!resortTitle) {
+                db.Resort.create(result)
+                    .catch(function (err) {
+                        res.sendStatus(err);
+                    });
+            };
         });
         res.send("Scrape Complete")
     });

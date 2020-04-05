@@ -29,7 +29,7 @@ $(".delete").click(function(event) {
 })
 
 $(".favorite").click(function(event){
-  console.log("Fav ID"+this.id);
+  console.log("Fav ID" + this.id);
   
   $.ajax({
     url: "/api/resorts/" + this.id,
